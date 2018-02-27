@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>at-carbon-button-group demo page</title>
+
+  <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+  <link rel="import" href="../../at-theme/at-theme.html">
+  <link rel="import" href="../../at-doc-snippet/at-doc-snippet.html" />
+  <link rel="import" href="../at-carbon-button-group.html">
+  
+  <style is="custom-style">
+    
+  </style>
+</head>
+
+<body>
+  <div>
+    <h4>No attributes set</h4>
+    <at-doc-snippet>
+      <template>
+        <at-carbon-button-group></at-carbon-button-group>
+      </template>
+    </at-doc-snippet>
+  </div>
+
+  <div>
+    <h4>Only moreLabel set</h4>
+    <at-doc-snippet>
+      <template>
+        <at-carbon-button-group more-label="Demo more label"></at-carbon-button-group>
+      </template>
+    </at-doc-snippet>
+  </div>
+
+  <div>
+    <h4>Only maxButtons set</h4>
+    <at-doc-snippet>
+      <template>
+        <at-carbon-button-group max-buttons="5"></at-carbon-button-group>
+      </template>
+    </at-doc-snippet>
+  </div>
+
+  <div>
+    <h4>Only buttons set</h4>
+    <at-doc-snippet>
+      <template>
+        <at-carbon-button-group
+          buttons='[{"title":"Title 1","value":"v1","icon":"now:wrench"},{"title":"Title 2","value":"v2","icon":"now:about"},{"title":"Title 3","value":"v3","icon":"now:about-filled"},{"title":"Title 4","value":"v4","icon":"now:alert"},{"title":"Title 5","value":"v5","icon":"now:ambulance"},{"title":"Title 6","value":"v6","icon":"now:audio"},{"title":"Title 7","value":"v7","icon":"now:cards"},{"title":"Title 8","value":"v8","icon":"now:file"},{"title":"Title 9","value":"v9","icon":"now:filter"}]'
+        ></at-carbon-button-group>
+      </template>
+    </at-doc-snippet>
+  </div>
+
+  <div>
+    <h4>moreLabel and maxButtons set</h4>
+    <at-doc-snippet>
+      <template>
+        <at-carbon-button-group more-label="Demo more label" max-buttons="5"></at-carbon-button-group>
+      </template>
+    </at-doc-snippet>
+  </div>
+
+  <div>
+    <h4>moreLabel and buttons set</h4>
+    <at-doc-snippet>
+      <template>
+        <at-carbon-button-group more-label="Demo more label"
+          buttons='[{"title":"Title 1","value":"v1","icon":"now:wrench"},{"title":"Title 2","value":"v2","icon":"now:about"},{"title":"Title 3","value":"v3","icon":"now:about-filled"},{"title":"Title 4","value":"v4","icon":"now:alert"},{"title":"Title 5","value":"v5","icon":"now:ambulance"},{"title":"Title 6","value":"v6","icon":"now:audio"},{"title":"Title 7","value":"v7","icon":"now:cards"},{"title":"Title 8","value":"v8","icon":"now:file"},{"title":"Title 9","value":"v9","icon":"now:filter"}]'
+        ></at-carbon-button-group>
+      </template>
+    </at-doc-snippet>
+  </div>
+
+  <div>
+    <h4>maxButtons and buttons set</h4>
+    <at-doc-snippet>
+      <template>
+        <at-carbon-button-group max-buttons="5"
+          buttons='[{"title":"Title 1","value":"v1","icon":"now:wrench"},{"title":"Title 2","value":"v2","icon":"now:about"},{"title":"Title 3","value":"v3","icon":"now:about-filled"},{"title":"Title 4","value":"v4","icon":"now:alert"},{"title":"Title 5","value":"v5","icon":"now:ambulance"},{"title":"Title 6","value":"v6","icon":"now:audio"},{"title":"Title 7","value":"v7","icon":"now:cards"},{"title":"Title 8","value":"v8","icon":"now:file"},{"title":"Title 9","value":"v9","icon":"now:filter"}]'
+        ></at-carbon-button-group>
+      </template>
+    </at-doc-snippet>
+  </div>
+
+  <div>
+    <h4>moreLabel, maxButtons and buttons set</h4>
+    <at-doc-snippet>
+      <template>
+        <at-carbon-button-group more-label="Demo more label" max-buttons="5"
+          buttons='[{"title":"Title 1","value":"v1","icon":"now:wrench"},{"title":"Title 2","value":"v2","icon":"now:about"},{"title":"Title 3","value":"v3","icon":"now:about-filled"},{"title":"Title 4","value":"v4","icon":"now:alert"},{"title":"Title 5","value":"v5","icon":"now:ambulance"},{"title":"Title 6","value":"v6","icon":"now:audio"},{"title":"Title 7","value":"v7","icon":"now:cards"},{"title":"Title 8","value":"v8","icon":"now:file"},{"title":"Title 9","value":"v9","icon":"now:filter"}]'
+        ></at-carbon-button-group>
+      </template>
+    </at-doc-snippet>
+  </div>  
+  
+  <script>
+    document.addEventListener('WebComponentsReady', function() {
+      var buttons = [
+        { title: "Title 1", value: "v1", icon: "now:wrench" },
+        { title: "Title 2", value: "v2", icon: "now:about" },
+        { title: "Title 3", value: "v3", icon: "now:about-filled" },
+        { title: "Title 4", value: "v4", icon: "now:alert" },
+        { title: "Title 5", value: "v5", icon: "now:ambulance" },
+        { title: "Title 6", value: "v6", icon: "now:audio" },
+        { title: "Title 7", value: "v7", icon: "now:cards" },
+        { title: "Title 8", value: "v8", icon: "now:file" },
+        { title: "Title 9", value: "v9", icon: "now:filter" }
+      ];
+    });
+  </script>
+</body>
+
+</html>

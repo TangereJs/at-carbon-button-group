@@ -1,0 +1,12 @@
+{
+  "name": "at-carbon-button-group",
+  "version": "1.0.0.0",
+  "private": true,
+  "dependencies": {
+    "tangere": "TangereJs/tangere#master",
+    "at-doc-viewer": "TangereJs/at-doc-viewer#master",
+    "at-core-style-classes": "TangereJs/at-core-style-classes#master",
+    "at-carbon-button": "TangereJs/at-carbon-button#master",
+    "at-carbon-menu-button": "TangereJs/at-carbon-menu-button#master"
+  }
+}

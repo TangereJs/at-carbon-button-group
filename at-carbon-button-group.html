@@ -1,0 +1,136 @@
+<link rel="import" href="../tangere/tangere.html" />
+<link rel="import" href="../at-core-style-classes/at-core-style-classes.html" />
+<link rel="import" href="../at-carbon-button/at-carbon-button.html" />
+<link rel="import" href="../at-carbon-menu-button/at-carbon-menu-button.html" />
+
+<dom-module id="at-carbon-button-group">
+  <template>
+    <style include="at-core-style-classes">
+      :host {
+        display: block;
+        box-sizing: border-box;
+        @apply(--layout-horizontal);
+      }
+    </style>
+    
+    <div id="buttonContainer" class="layout-horizontal" on-tap="_handleVisibleButtonsTap"></div>
+    <div class="layout-horizontal" hidden$="[[_computeHidden(buttons, maxButtons)]]">
+      <at-carbon-menu-button id="menuButton" on-value-changed="_handleMenuValueChanged"></at-carbon-menu-button>
+      <div class="font-body1 layout-self-center" on-tap="_handleLabelTap">[[moreLabel]]</div>
+    </div>
+  </template>
+</dom-module>
+<script>
+  Polymer({
+    is: "at-carbon-button-group",
+    properties: {
+      
+      moreLabel: {
+        type: String,
+        title: "More label",
+        value: ''
+      },
+
+      maxButtons: {
+        type: Number,
+        title: "Max Buttons",
+        value: 3
+      },
+
+      buttons: {
+        type: Array,
+        value: function() {
+          return [];
+        },
+        title: "Buttons",
+        xgridcols: "12",
+        schema: {
+          properties: {
+            title: {
+              type: String,
+              title: "Title",
+              value: ''
+            },
+            value: {
+              type: String,
+              title: "Value",
+              value: ''
+            },
+            icon: {
+              type: String,
+              title: "Icon",
+              value: 'now:wrench'
+            }
+          }
+        }
+      },
+
+      value: {
+        type: String,
+        value: "",
+        readonly: true
+      }
+    },
+
+    observers: [
+      '_initialize(buttons, maxButtons)'
+    ],
+
+    ready: function () {
+
+    },
+
+    _initialize: function(buttons, maxButtons) {
+      var visibleButtons = buttons.slice(0, maxButtons);
+      var menuButtons = buttons.slice(maxButtons);
+
+      Polymer.dom(this.$.buttonContainer).innerHTML = '';
+      visibleButtons.forEach(function(buttonDef) {
+        var carbonButton = document.createElement('at-carbon-button');
+        carbonButton.label = buttonDef.title;
+        carbonButton.icon  = buttonDef.icon;
+        carbonButton.raised = true;
+        Polymer.dom(carbonButton).setAttribute('value', buttonDef.value);
+        Polymer.dom(this.$.buttonContainer).appendChild(carbonButton);
+      }, this);
+
+      if (!menuButtons.length) return;
+      
+      this.$.menuButton.items = [];
+      this.$.menuButton.items = menuButtons;
+    },
+
+    _computeHidden: function(buttons, maxButtons) {
+      return buttons.length <= maxButtons;
+    },
+
+    _handleLabelTap: function(event) {
+      // NOTE at-carbon-menu-button needs the open function where we can pass
+      // relativeTo element. dropdown will be positioned relative to element passed
+      this.$.menuButton.$.dropdown.toggle(this.$.menuButton, event);
+    },
+
+    _handleVisibleButtonsTap: function(event) {
+      var target = event.target;
+      if (target.nodeName === "DIV") return;
+      
+      var curr = target;
+      // navigate parent chain until at-carbon-button is reached
+      while(curr.nodeName !== "AT-CARBON-BUTTON") {
+        curr = curr.parentElement;
+      }
+
+      var value = curr.getAttribute('value');
+      this.value = value;
+      this.fire('value-changed', { value: value }, { bubbles: false });
+    },  
+
+    _handleMenuValueChanged: function(event) {
+      var value = event.detail.value;
+      var target = event.target;
+      
+      this.value = value;
+      this.fire('value-changed', { value: value }, { bubbles: false });
+    },
+  });
+</script>
