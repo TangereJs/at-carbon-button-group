@@ -84,8 +84,16 @@
     },
 
     _initialize: function(buttons, maxButtons) {
-      var visibleButtons = buttons.slice(0, maxButtons-1);
-      var menuButtons = buttons.slice(maxButtons-1);
+      var visibleButtons = [];
+      var menuButtons = [];
+
+      if (buttons.length <= maxButtons) {
+        visibleButtons = buttons;
+      
+      } else {
+        visibleButtons = buttons.slice(0, maxButtons-1);
+        menuButtons = buttons.slice(maxButtons-1);
+      }
 
       Polymer.dom(this.$.buttonContainer).innerHTML = '';
       visibleButtons.forEach(function(buttonDef) {
@@ -104,7 +112,7 @@
     },
 
     _computeHidden: function(buttons, maxButtons) {
-      return buttons.length <= maxButtons-1;
+      return buttons.length <= maxButtons;
     }
 
   });
