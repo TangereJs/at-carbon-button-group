@@ -1,7 +1,7 @@
 <link rel="import" href="../tangere/tangere.html" />
 <link rel="import" href="../at-core-style-classes/at-core-style-classes.html" />
 <link rel="import" href="../at-carbon-button/at-carbon-button.html" />
-<link rel="import" href="../at-carbon-menu-button/at-carbon-menu-button.html" />
+<link rel="import" href="../at-carbon-button-menu/at-carbon-button-menu.html" />
 
 <dom-module id="at-carbon-button-group">
   <template>
@@ -13,11 +13,8 @@
       }
     </style>
     
-    <div id="buttonContainer" class="layout-horizontal" on-tap="_handleVisibleButtonsTap"></div>
-    <div class="layout-horizontal" hidden$="[[_computeHidden(buttons, maxButtons)]]">
-      <at-carbon-menu-button id="menuButton" on-value-changed="_handleMenuValueChanged"></at-carbon-menu-button>
-      <div class="font-body1 layout-self-center" on-tap="_handleLabelTap">[[moreLabel]]</div>
-    </div>
+    <div id="buttonContainer" class="layout-horizontal"></div>
+    <at-carbon-button-menu id="menuButton" icon="[[moreIcon]]" label="[[moreLabel]]" hidden$="[[_computeHidden(buttons, maxButtons)]]"></at-carbon-button-menu>
   </template>
 </dom-module>
 <script>
@@ -28,6 +25,12 @@
       moreLabel: {
         type: String,
         title: "More label",
+        value: 'more...'
+      },
+
+      moreIcon: {
+        type: String,
+        title: 'More icon',
         value: ''
       },
 
@@ -102,35 +105,7 @@
 
     _computeHidden: function(buttons, maxButtons) {
       return buttons.length <= maxButtons-1;
-    },
+    }
 
-    _handleLabelTap: function(event) {
-      // NOTE at-carbon-menu-button needs the open function where we can pass
-      // relativeTo element. dropdown will be positioned relative to element passed
-      this.$.menuButton.$.dropdown.toggle(this.$.menuButton, event);
-    },
-
-    _handleVisibleButtonsTap: function(event) {
-      var target = event.target;
-      if (target.nodeName === "DIV") return;
-      
-      var curr = target;
-      // navigate parent chain until at-carbon-button is reached
-      while(curr.nodeName !== "AT-CARBON-BUTTON") {
-        curr = curr.parentElement;
-      }
-
-      var value = curr.getAttribute('value');
-      this.value = value;
-      this.fire('value-changed', { value: value }, { bubbles: false });
-    },  
-
-    _handleMenuValueChanged: function(event) {
-      var value = event.detail.value;
-      var target = event.target;
-      
-      this.value = value;
-      this.fire('value-changed', { value: value }, { bubbles: false });
-    },
   });
 </script>
