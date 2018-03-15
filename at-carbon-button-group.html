@@ -12,16 +12,16 @@
         @apply(--layout-horizontal);
       }
     </style>
-    
-    <div id="buttonContainer" class="layout-horizontal"></div>
-    <at-carbon-button-menu id="menuButton" icon="[[moreIcon]]" label="[[moreLabel]]" hidden$="[[_computeHidden(buttons, maxButtons)]]"></at-carbon-button-menu>
+
+    <div id="buttonContainer" class="layout-horizontal" on-tap="_handleButtonTapped"></div>
+    <at-carbon-button-menu id="menuButton" icon="[[moreIcon]]" label="[[moreLabel]]" hidden$="[[_computeHidden(buttons, maxButtons)]]" on-clicked="_handleItemClicked"></at-carbon-button-menu>
   </template>
 </dom-module>
 <script>
   Polymer({
     is: "at-carbon-button-group",
     properties: {
-      
+
       moreLabel: {
         type: String,
         title: "More label",
@@ -71,7 +71,7 @@
       value: {
         type: String,
         value: "",
-        readonly: true
+        readOnly: true
       }
     },
 
@@ -89,7 +89,7 @@
 
       if (buttons.length <= maxButtons) {
         visibleButtons = buttons;
-      
+
       } else {
         visibleButtons = buttons.slice(0, maxButtons-1);
         menuButtons = buttons.slice(maxButtons-1);
@@ -106,13 +106,39 @@
       }, this);
 
       if (!menuButtons.length) return;
-      
+
       this.$.menuButton.items = [];
       this.$.menuButton.items = menuButtons;
     },
 
     _computeHidden: function(buttons, maxButtons) {
       return buttons.length <= maxButtons;
+    },
+
+    _handleButtonTapped: function(event) {
+      if (event.target.id === "buttonContainer") return;
+      var curr = event.target;
+      while(curr.nodeName !== "AT-CARBON-BUTTON") {
+        curr = curr.parentNode;
+      }
+      var value = curr.getAttribute('value');
+      this._fireButtonClickedEvent(value);
+    },
+
+    _handleItemClicked: function(event) {
+      var value = event.detail.value;
+      this._fireButtonClickedEvent(value);
+    },
+
+    _fireButtonClickedEvent: function(value) {
+      var found = false;
+      for (var i = 0; i < this.buttons.length && !found; i++) {
+        var button = this.buttons[i];
+        found = button.value === value ? button : false;
+      }
+
+      this._setValue(button.value);
+      this.fire('button-clicked', { button: button }, { bubbles: false });
     }
 
   });
