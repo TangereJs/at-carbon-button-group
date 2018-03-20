@@ -1,0 +1,145 @@
+<link rel="import" href="../../tangere/tangere.html" />
+<link rel="import" href="event-source.html" />
+<link rel="import" href="../../at-carbon-button/at-carbon-button.html" />
+
+<dom-module id="case3-elt">
+  <template>
+    <style>
+       :host {
+        display: block;
+        box-sizing: border-box;
+      }
+
+      .event-source {
+        padding: 16px;
+        background-color: var(--lv1-bc);
+      }
+
+      at-carbon-button {
+        display: inline-block;
+        box-sizing: border-box;
+        padding: 16px;
+        margin: 0 4px;
+        background-color: var(--lv2-bc);
+      }
+
+      .no-padding {
+        padding: 0 !important;
+      }
+
+      .view-div {
+        padding: 4px;
+        display: inline-block;
+        cursor: pointer;
+        background-color: var(--lv3-bc);
+        color: #FFFF00;
+        @apply(--shadow-elevation-2dp);
+      }
+
+      .view-div:hover {
+        @apply(--shadow-elevation-4dp);
+      }
+
+      .view-div:active {
+        @apply(--shadow-elevation-6dp);
+      }
+
+      .row {
+        margin: 16px 0 0 0 ;
+      }
+
+      .square-1 {
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        background-color: var(--lv1-bc);
+      }
+
+      .square-2 {
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        background-color: var(--lv2-bc);
+      }
+
+      .square-3 {
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        background-color: var(--lv3-bc);
+      }
+
+      .legend-title {
+        font-weight: bold;
+      }
+
+    </style>
+
+    <h2>Case 3</h2>
+
+    <div class="row">
+      <span class="legend-title">Legend</span>
+      <span><span class="square-1"></span> - event source</span>
+      <span><span class="square-2"></span> - at-carbon-button</span>
+    </div>
+
+    <div class="row">
+      <ul>
+        <li>In case 3 click event handler is attached on event source.</li>
+        <li>Event handler is triggered when any of the following are clicked: event source or at-carbon-button.</li>
+      </ul>
+    </div>
+    <event-source value="level 1 event source" class="row event-source" on-click="_handleClick">
+      <at-carbon-button label="Level 1 button 1" value="level 1 button 1" raised icon="now:wrench"></at-carbon-button>
+      <at-carbon-button label="Level 1 button 2" value="level 1 button 2" raised icon="now:wrench"></at-carbon-button>
+      <at-carbon-button label="Level 1 button 3" value="level 1 button 3" raised icon="now:wrench"></at-carbon-button>
+      <at-carbon-button label="Level 1 button 4" value="level 1 button 4" raised icon="now:wrench"></at-carbon-button>
+    </event-source>
+
+    <div class="row">
+      <ul>
+        <li>To capture at-carbon-button events, one must manually filter event source clicks.</li>
+      </ul>
+    </div>
+    <event-source value="level 1 event source" class="row event-source" on-click="_filterEventSourceClick">
+      <at-carbon-button label="Level 1 button 1" value="level 1 button 1" raised icon="now:wrench"></at-carbon-button>
+      <at-carbon-button label="Level 1 button 2" value="level 1 button 2" raised icon="now:wrench"></at-carbon-button>
+      <at-carbon-button label="Level 1 button 3" value="level 1 button 3" raised icon="now:wrench"></at-carbon-button>
+      <at-carbon-button label="Level 1 button 4" value="level 1 button 4" raised icon="now:wrench"></at-carbon-button>
+    </event-source>
+
+  </template>
+</dom-module>
+<script>
+  Polymer({
+    is: "case3-elt",
+    properties: {
+
+    },
+    _handleClick: function(event) {
+      var normEvt = Polymer.dom(event);
+      var alertMsg = ['Clicked element value: ', normEvt.localTarget.getAttribute('value')].join("");
+      alert(alertMsg);
+
+      // alertMsg = ['Clicked element value: ', event.target.nodeName].join("");
+      // alert(alertMsg);
+    },
+
+    _filterEventSourceClick: function(event) {
+      var normEvt = Polymer.dom(event);
+      if (normEvt.localTarget.nodeName === "EVENT-SOURCE") return;
+
+      var alertMsg = ['Clicked element value: ', normEvt.localTarget.getAttribute('value')].join("");
+      alert(alertMsg);
+
+      // alertMsg = ['Clicked element value: ', event.target.nodeName].join("");
+      // alert(alertMsg);
+    },
+
+    ready: function() {
+    }
+
+  });
+
+</script>
+

@@ -1,0 +1,233 @@
+<link rel="import" href="../../tangere/tangere.html" />
+<link rel="import" href="event-source.html" />
+<link rel="import" href="../../at-core-view/at-core-view.html" />
+
+<dom-module id="case2-elt">
+  <template>
+    <style>
+       :host {
+        display: block;
+        box-sizing: border-box;
+      }
+
+      .event-source {
+        padding: 16px;
+      }
+
+      .event-source.lv-1 {
+        background-color: var(--lv1-bc);
+      }
+
+      .event-source.lv-2 {
+        background-color: var(--lv2-bc);
+      }
+
+      .event-source.lv-3 {
+        background-color: var(--lv3-bc);
+      }
+
+      at-core-view {
+        display: inline-block;
+        box-sizing: border-box;
+        padding: 16px;
+        margin: 0 4px;
+        background-color: var(--lv4-bc);
+      }
+
+      .no-padding {
+        padding: 0 !important;
+      }
+
+      .view-div {
+        padding: 4px;
+        display: inline-block;
+        cursor: pointer;
+        background-color: var(--lv5-bc);
+        color: #FFFF00;
+        @apply(--shadow-elevation-2dp);
+      }
+
+      .view-div:hover {
+        @apply(--shadow-elevation-4dp);
+      }
+
+      .view-div:active {
+        @apply(--shadow-elevation-6dp);
+      }
+
+      .row {
+        margin: 16px 0 0 0 ;
+      }
+
+      .square {
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+      }
+
+      .square.lv-1 {
+        background-color: var(--lv1-bc);
+      }
+      .square.lv-2 {
+        background-color: var(--lv2-bc);
+      }
+      .square.lv-3 {
+        background-color: var(--lv3-bc);
+      }
+      .square.lv-4 {
+        background-color: var(--lv4-bc);
+      }
+      .square.lv-5 {
+        background-color: var(--lv5-bc);
+      }
+
+      .legend-title {
+        font-weight: bold;
+      }
+
+    </style>
+
+    <h2>Case 2</h2>
+
+    <div class="row">
+      <span class="legend-title">Legend</span>
+      <span><span class="square lv-1"></span> - event source level 1</span>
+      <span><span class="square lv-2"></span> - event source level 2</span>
+      <span><span class="square lv-3"></span> - event source level 3</span>
+      <span><span class="square lv-4"></span> - at-core-view</span>
+      <span><span class="square lv-5"></span> - view content</span>
+    </div>
+
+    <div class="row">
+      <ul>
+        <li>In case 2 click event handler is attached on event source.</li>
+        <li>Event handler is triggered when any of the following are clicked: event source, at-core-view or view content. </li>
+        <li>Its not clear if we want to capture click events of at-core-view only or view content only</li>
+        <li>To capture view content only, make sure at-core-view has padding: 0. This makes view contet take all the space of at-core-view so its not possible to click at-core-view</li>
+        <li>To capture at-core-view only, when view content is clicked one must change event target of click event to be at-core-view</li>
+      </ul>
+    </div>
+
+    <event-source value="level 1 event source" class="row event-source lv-1" on-click="_handleClick">
+      <event-source value="level 2 event source" class="event-source lv-2">
+        <event-source value="level 3 event source" class="event-source lv-3">
+          <at-core-view
+            value="level 3 core view 1"
+            view='<div class="view-div" value="level 3 view content 1">Level 3 view content 1</div>'
+          ></at-core-view>
+          <at-core-view
+            value="level 3 core view 2"
+            view='<div class="view-div" value="level 3 view content 2">Level 3 view content 2</div>'
+          ></at-core-view>
+          <at-core-view
+            value="level 3 core view 3"
+            view='<div class="view-div" value="level 3 view content 3">Level 3 view content 3</div>'
+            ></at-core-view>
+          <at-core-view
+            value="level 3 core view 4"
+            view='<div class="view-div" value="level 3 view content 4">Level 3 view content 4</div>'
+          ></at-core-view>
+        </event-source>
+      </event-source>
+    </event-source>
+
+    <div class="row">
+      <h4>This is view content click event only</h4>
+      <ul>
+        <li>To capture view content only, make sure at-core-view has padding: 0. This makes view contet take all the space of at-core-view so its not possible to click at-core-view</li>
+      </ul>
+    </div>
+    <event-source value="level 1 event source" class="row event-source lv-1" on-click="_handleClick">
+      <event-source value="level 2 event source" class="event-source lv-2">
+        <event-source value="level 3 event source" class="event-source lv-3">
+          <at-core-view
+            class="no-padding"
+            value="level 3 core view 1"
+            view='<div class="view-div" value="level 3 view content 1">Level 3 view content 1</div>'
+          ></at-core-view>
+          <at-core-view
+            class="no-padding"
+            value="level 3 core view 2"
+            view='<div class="view-div" value="level 3 view content 2">Level 3 view content 2</div>'
+          ></at-core-view>
+          <at-core-view
+            class="no-padding"
+            value="level 3 core view 3"
+            view='<div class="view-div" value="level 3 view content 3">Level 3 view content 3</div>'
+            ></at-core-view>
+          <at-core-view
+            class="no-padding"
+            value="level 3 core view 4"
+            view='<div class="view-div" value="level 3 view content 4">Level 3 view content 4</div>'
+          ></at-core-view>
+        </event-source>
+      </event-source>
+    </event-source>
+
+    <div class="row">
+      <h4>This is at-core-view click event only</h4>
+      <ul>
+        <li>To capture at-core-view only, find core-view manually in event.path</li>
+      </ul>
+    </div>
+    <event-source value="level 1 event source" class="row event-source lv-1" on-click="_handleCoreViewClick">
+      <event-source value="level 2 event source" class="event-source lv-2">
+        <event-source value="level 3 event source" class="event-source lv-3">
+          <at-core-view
+            value="level 3 core view 1"
+            view='<div class="view-div" value="level 3 view content 1">Level 3 view content 1</div>'
+          ></at-core-view>
+          <at-core-view
+            value="level 3 core view 2"
+            view='<div class="view-div" value="level 3 view content 2">Level 3 view content 2</div>'
+          ></at-core-view>
+          <at-core-view
+            value="level 3 core view 3"
+            view='<div class="view-div" value="level 3 view content 3">Level 3 view content 3</div>'
+            ></at-core-view>
+          <at-core-view
+            value="level 3 core view 4"
+            view='<div class="view-div" value="level 3 view content 4">Level 3 view content 4</div>'
+          ></at-core-view>
+        </event-source>
+      </event-source>
+    </event-source>
+
+
+  </template>
+</dom-module>
+<script>
+  Polymer({
+    is: "case2-elt",
+    properties: {
+
+    },
+    _handleClick: function(event) {
+      var normEvt = Polymer.dom(event);
+      var alertMsg = ['Clicked element value: ', normEvt.localTarget.getAttribute('value')].join("");
+      alert(alertMsg);
+    },
+
+    _handleCoreViewClick: function(event) {
+      var normEvt = Polymer.dom(event);
+
+      if (normEvt.localTarget.nodeName === "EVENT-SOURCE") return;
+
+      var index = 0;
+      var elt = normEvt.path[index];
+      while(elt.nodeName !== "AT-CORE-VIEW") {
+        ++index;
+        elt = normEvt.path[index];
+      }
+
+      var alertMsg = ['Clicked element value: ', elt.getAttribute('value')].join("");
+      alert(alertMsg);
+    },
+
+    ready: function() {
+    }
+
+  });
+
+</script>
+

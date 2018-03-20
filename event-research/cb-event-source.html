@@ -1,0 +1,68 @@
+<link rel="import" href="../../tangere/tangere.html" />
+<link rel="import" href="../../at-carbon-button/at-carbon-button.html" />
+
+<dom-module id="cb-event-source">
+  <template>
+    <style>
+      :host {
+        display: block;
+        box-sizing: border-box;
+      }
+
+      at-carbon-button {
+        display: inline-block;
+        box-sizing: border-box;
+        padding: 16px;
+        margin: 0 4px;
+        background-color: var(--cv-bc);
+        color: #FFFF00;
+      }
+    </style>
+
+  </template>
+</dom-module>
+<script>
+  Polymer({
+    is: "cb-event-source",
+    properties: {
+      items: {
+        type: Array,
+        value: function() {
+          return [];
+        }
+      }
+    },
+
+    observers: [
+      '_initialize(items.*)'
+    ],
+
+    _initialize: function(itemSplices) {
+      var items = itemSplices.base;
+      Polymer.dom(this.root).innerHTML = '';
+      if (!items.length) return;
+
+      items.forEach(function(item, index) {
+        var carbonButton = this.create('at-carbon-button', {
+          id: item.id,
+          label: item.title,
+          icon: "now:wrench",
+          raised: true
+        });
+
+        Polymer.dom(carbonButton).setAttribute('name', "carbon-button " + (index+1));
+
+        if (item.class) {
+          Polymer.dom(carbonButton).classList.add(item.class);
+        }
+
+        Polymer.dom(this.root).appendChild(carbonButton);
+
+      }, this);
+    },
+
+    ready: function () {
+
+    }
+  });
+</script>

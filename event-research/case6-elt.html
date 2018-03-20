@@ -1,0 +1,156 @@
+<link rel="import" href="../../tangere/tangere.html" />
+<link rel="import" href="ldom-container-lv1.html" />
+
+<dom-module id="case6-elt">
+  <template>
+    <style>
+       :host {
+        display: block;
+        box-sizing: border-box;
+      }
+
+      .event-source {
+        padding: 16px;
+        background-color: var(--lv1-bc);
+      }
+
+      .row {
+        margin: 16px 0 0 0 ;
+      }
+
+      .square {
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+      }
+
+      .square.lv-1 {
+        background-color: var(--lv1-bc);
+      }
+
+      .square.lv-2 {
+        background-color: var(--lv2-bc);
+      }
+
+      .square.lv-3 {
+        background-color: var(--lv3-bc);
+      }
+
+      .square.lv-4 {
+        background-color: var(--lv4-bc);
+      }
+
+      .square.lv-5 {
+        background-color: var(--lv5-bc);
+      }
+
+      .legend-title {
+        font-weight: bold;
+      }
+
+    </style>
+
+    <h2>Case 6</h2>
+
+    <div class="row">
+      <span class="legend-title">Legend</span>
+      <span><span class="square lv-1"></span> - event source container level 1</span>
+      <span><span class="square lv-2"></span> - event source container level 2</span>
+      <span><span class="square lv-3"></span> - event source container level 3</span>
+      <span><span class="square lv-4"></span> - at-core-view</span>
+      <span><span class="square lv-5"></span> - at-core-view content</span>
+    </div>
+
+    <div class="row">
+      <ul>
+        <li>In case 6 click event handler is attached on event source container at level 1.</li>
+        <li>Event handler is triggered when any of the following are clicked: event source container level 1, event source container level 2, event source container level 3, at-core-view or view content. </li>
+        <li>Its not clear if we want to capture click events of at-core-view only or view content only</li>
+      </ul>
+    </div>
+    <ldom-container-lv1 items="[[_items]]" on-click="_handleClick" class="event-source" name="level 1 event source container"></ldom-container-lv1>
+
+    <div class="row">
+      <ul>
+        <li>To capture view content only, make sure at-core-view has padding: 0. This makes view content take all the space of at-core-view so its not possible to click at-core-view</li>
+      </ul>
+    </div>
+    <ldom-container-lv1 items="[[_items1]]" on-click="_handleClick" class="event-source" name="level 1 event source"></ldom-container-lv1>
+
+    <div class="row">
+      <ul>
+        <li>To capture at-core-view only, one must filter inner clicks manually</li>
+      </ul>
+    </div>
+    <ldom-container-lv1 items="[[_items]]" on-click="_handleCoreViewClick" class="event-source" name="level 1 event source"></ldom-container-lv1>
+
+  </template>
+</dom-module>
+<script>
+  Polymer({
+    is: "case6-elt",
+    properties: {
+      _items: {
+        type: Array,
+        value: function() {
+          return [];
+        }
+      },
+
+      _items2: {
+        type: Array,
+        value: function() {
+          return [];
+        }
+      }
+
+    },
+
+    _handleClick: function(event) {
+      // var normEvt = Polymer.dom(event);
+      // var alertMsg = ['Clicked element name: ', normEvt.localTarget.getAttribute('name')].join("");
+      // alert(alertMsg);
+
+      var alertMsg = ['Clicked element name: ', event.target.getAttribute('name')].join("");
+      alert(alertMsg);
+    },
+
+    _handleCoreViewClick: function(event) {
+
+      var filterNames = [
+        "LDOM-CONTAINER-LV1", "LDOM-CONTAINER-LV2", "LDOM-CONTAINER-LV3", "LDOM-EVENT-SOURCE"
+      ];
+
+      if (filterNames.indexOf(event.target.nodeName) > -1) return;
+
+      var index = 0;
+      var elt = event.path[index];
+      while(elt.nodeName !== "AT-CORE-VIEW") {
+        ++index;
+        elt = event.path[index];
+      }
+
+      var alertMsg = ['Clicked element value: ', elt.getAttribute('name')].join("");
+      alert(alertMsg);
+    },
+
+    ready: function() {
+      this._items = [
+        { title: "Item 1", value: "item 1 value", id: "item1" },
+        { title: "Item 2", value: "item 2 value", id: "item2" },
+        { title: "Item 3", value: "item 3 value", id: "item3" },
+        { title: "Item 4", value: "item 4 value", id: "item4" },
+      ];
+
+      this._items1 = [
+        { title: "Item 1", value: "item 1 value", id: "item1", class: "no-padding" },
+        { title: "Item 2", value: "item 2 value", id: "item2", class: "no-padding" },
+        { title: "Item 3", value: "item 3 value", id: "item3", class: "no-padding" },
+        { title: "Item 4", value: "item 4 value", id: "item4", class: "no-padding" },
+      ];
+    }
+
+  });
+
+</script>
+

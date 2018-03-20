@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>event research demo page</title>
+
+  <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+  <link rel="import" href="../../at-theme/at-theme.html">
+  <link rel="import" href="case1-elt.html" />
+  <link rel="import" href="case2-elt.html" />
+  <link rel="import" href="case3-elt.html" />
+  <link rel="import" href="case4-elt.html" />
+  <link rel="import" href="case5-elt.html" />
+  <link rel="import" href="case6-elt.html" />
+  <link rel="import" href="case7-elt.html" />
+  <link rel="import" href="case8-elt.html" />
+
+  <style is="custom-style">
+    :root {
+      --lv1-bc: #CCCCCC;
+      --lv2-bc: #B3B3B3;
+      --lv3-bc: #999999;
+      --lv4-bc: #7F7F7F;
+      --lv5-bc: #666666;
+    }
+
+    .case-elt {
+      margin: 16px 64px 0 64px;
+    }
+
+    .cs-1 {
+      --lv1-bc: #FF7700;
+      --lv2-bc: #E65E00;
+      --lv3-bc: #CC4400;
+      --lv4-bc: #B32B00;
+      --lv5-bc: #991100;
+    }
+
+    .cs-2 {
+      --lv1-bc: #00FF77;
+      --lv2-bc: #00E65E;
+      --lv3-bc: #00CC44;
+      --lv4-bc: #00B32B;
+      --lv5-bc: #009911;
+    }
+
+    .cs-3 {
+      --lv1-bc: #7700FF;
+      --lv2-bc: #5E00E6;
+      --lv3-bc: #4400CC;
+      --lv4-bc: #2B00B3;
+      --lv5-bc: #110099;
+    }
+  </style>
+</head>
+
+<body>
+  <case1-elt class="case-elt"></case1-elt>
+  <case2-elt class="case-elt cs-1"></case2-elt>
+  <case3-elt class="case-elt cs-2"></case3-elt>
+  <case4-elt class="case-elt cs-3"></case4-elt>
+  <case5-elt class="case-elt"></case5-elt>
+  <case6-elt class="case-elt cs-1"></case6-elt>
+  <case7-elt class="case-elt cs-2"></case7-elt>
+  <case8-elt class="case-elt cs-3"></case8-elt>
+
+  <script>
+    document.addEventListener('WebComponentsReady', function() {
+
+    });
+  </script>
+</body>
+
+</html>
+

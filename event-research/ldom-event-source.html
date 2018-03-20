@@ -1,0 +1,88 @@
+<link rel="import" href="../../tangere/tangere.html" />
+<link rel="import" href="../../at-core-view/at-core-view.html" />
+
+<dom-module id="ldom-event-source">
+  <template>
+    <style>
+      :host {
+        display: block;
+        box-sizing: border-box;
+      }
+
+      at-core-view {
+        display: inline-block;
+        box-sizing: border-box;
+        padding: 16px;
+        margin: 0 4px;
+        background-color: var(--cv-bc);
+      }
+
+      .no-padding {
+        padding: 0 !important;
+      }
+
+      .view-div {
+        padding: 4px;
+        display: inline-block;
+        cursor: pointer;
+        background-color: var(--vd-bc);
+        color: #FFFF00;
+        @apply(--shadow-elevation-2dp);
+      }
+
+      .view-div:hover {
+        @apply(--shadow-elevation-4dp);
+      }
+
+      .view-div:active {
+        @apply(--shadow-elevation-6dp);
+      }
+    </style>
+
+  </template>
+</dom-module>
+<script>
+  Polymer({
+    is: "ldom-event-source",
+    properties: {
+      items: {
+        type: Array,
+        value: function() {
+          return [];
+        }
+      }
+    },
+
+    observers: [
+      '_initialize(items.*)'
+    ],
+
+    _view: '<div class="view-div" id="{{id}}" name="{{value}}">{{title}}</div>',
+
+    _initialize: function(itemSplices) {
+      var items = itemSplices.base;
+      Polymer.dom(this.root).innerHTML = '';
+      if (!items.length) return;
+
+      items.forEach(function(item, index) {
+        var coreView = this.create('at-core-view', {
+          view: this._view,
+          model: item,
+        });
+
+        Polymer.dom(coreView).setAttribute('name', "core-view " + (index+1));
+
+        if (item.class) {
+          Polymer.dom(coreView).classList.add(item.class);
+        }
+
+        Polymer.dom(this.root).appendChild(coreView);
+
+      }, this);
+    },
+
+    ready: function () {
+
+    }
+  });
+</script>

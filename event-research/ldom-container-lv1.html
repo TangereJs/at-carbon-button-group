@@ -1,0 +1,34 @@
+<link rel="import" href="../../tangere/tangere.html" />
+<link rel="import" href="ldom-container-lv2.html" />
+
+<dom-module id="ldom-container-lv1">
+  <template>
+    <style>
+      :host {
+        display: block;
+        box-sizing: border-box;
+
+        padding: 16px;
+        background-color: var(--lv1-bc);
+      }
+    </style>
+    <ldom-container-lv2 items="[[items]]" name="level 2 event source container"></ldom-container-lv2>
+  </template>
+</dom-module>
+<script>
+  Polymer({
+    is: "ldom-container-lv1",
+    properties: {
+      items: {
+        type: Array,
+        value: function() {
+          return [];
+        }
+      }
+    },
+
+    ready: function () {
+
+    }
+  });
+</script>

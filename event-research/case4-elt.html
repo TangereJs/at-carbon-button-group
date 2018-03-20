@@ -1,0 +1,149 @@
+<link rel="import" href="../../tangere/tangere.html" />
+<link rel="import" href="event-source.html" />
+<link rel="import" href="../../at-carbon-button/at-carbon-button.html" />
+
+<dom-module id="case4-elt">
+  <template>
+    <style>
+       :host {
+        display: block;
+        box-sizing: border-box;
+      }
+
+      .event-source {
+        padding: 16px;
+      }
+
+      .event-source.lv-1 {
+        background-color: var(--lv1-bc);
+      }
+
+      .event-source.lv-2 {
+        background-color: var(--lv2-bc);
+      }
+
+      .event-source.lv-3 {
+        background-color: var(--lv3-bc);
+      }
+
+      at-carbon-button {
+        display: inline-block;
+        box-sizing: border-box;
+        padding: 16px;
+        margin: 0 4px;
+        background-color: var(--lv4-bc);
+        color: yellow;
+      }
+
+      .row {
+        margin: 16px 0 0 0;
+      }
+
+      .square {
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+      }
+
+      .square.lv-1 {
+        background-color: var(--lv1-bc);
+      }
+
+      .square.lv-2 {
+        background-color: var(--lv2-bc);
+      }
+
+      .square.lv-3 {
+        background-color: var(--lv3-bc);
+      }
+
+      .square.lv-4 {
+        background-color: var(--lv4-bc);
+      }
+
+      .square.lv-5 {
+        background-color: var(--lv5-bc);
+      }
+
+
+      .legend-title {
+        font-weight: bold;
+      }
+
+    </style>
+
+    <h2>Case 4</h2>
+
+    <div class="row">
+      <span class="legend-title">Legend</span>
+      <span><span class="square lv-1"></span> - event source level 1</span>
+      <span><span class="square lv-2"></span> - event source level 2</span>
+      <span><span class="square lv-3"></span> - event source level 3</span>
+      <span><span class="square lv-4"></span> - at-carbon-button</span>
+    </div>
+
+    <div class="row">
+      <ul>
+        <li>In Case 4 click event handler is attached on event source at level 1.</li>
+        <li>Event handler is triggered when any of the following are clicked: event source level 1, event source level 2, event source level 3 or at-carbon-buttons.</li>
+      </ul>
+    </div>
+    <event-source value="level 1 event source" class="row event-source lv-1" on-click="_handleClick">
+      <event-source value="level 2 event source" class="event-source lv-2">
+        <event-source value="level 3 event source" class="event-source lv-3">
+          <at-carbon-button label="Level 3 button 1" value="level 3 button 1" raised icon="now:wrench"></at-carbon-button>
+          <at-carbon-button label="Level 3 button 2" value="level 3 button 2" raised icon="now:wrench"></at-carbon-button>
+          <at-carbon-button label="Level 3 button 3" value="level 3 button 3" raised icon="now:wrench"></at-carbon-button>
+          <at-carbon-button label="Level 3 button 4" value="level 3 button 4" raised icon="now:wrench"></at-carbon-button>
+        </event-source>
+      </event-source>
+    </event-source>
+
+    <div class="row">
+      <ul>
+        <li>To capture at-carbon-button events, one must manually filter event source clicks.</li>
+      </ul>
+    </div>
+    <event-source value="level 1 event source" class="row event-source lv-1" on-click="_filterEventSourceClick">
+      <event-source value="level 2 event source" class="event-source lv-2">
+        <event-source value="level 3 event source" class="event-source lv-3">
+          <at-carbon-button label="Level 3 button 1" value="level 3 button 1" raised icon="now:wrench"></at-carbon-button>
+          <at-carbon-button label="Level 3 button 2" value="level 3 button 2" raised icon="now:wrench"></at-carbon-button>
+          <at-carbon-button label="Level 3 button 3" value="level 3 button 3" raised icon="now:wrench"></at-carbon-button>
+          <at-carbon-button label="Level 3 button 4" value="level 3 button 4" raised icon="now:wrench"></at-carbon-button>
+        </event-source>
+      </event-source>
+    </event-source>
+  </template>
+</dom-module>
+<script>
+  Polymer({
+    is: "case4-elt",
+    properties: {
+
+    },
+    _handleClick: function(event) {
+      var normEvt = Polymer.dom(event);
+      var alertMsg = ['Clicked element value: ', normEvt.localTarget.getAttribute('value')].join("");
+      alert(alertMsg);
+
+      // alertMsg = ['Clicked element value: ', event.target.nodeName].join("");
+      // alert(alertMsg);
+    },
+
+    _filterEventSourceClick: function(event) {
+      var normEvt = Polymer.dom(event);
+      if (normEvt.localTarget.nodeName === "EVENT-SOURCE") return;
+
+      var alertMsg = ['Clicked element value: ', normEvt.localTarget.getAttribute('value')].join("");
+      alert(alertMsg);
+
+      // alertMsg = ['Clicked element value: ', event.target.nodeName].join("");
+      // alert(alertMsg);
+    },
+
+    ready: function() {}
+
+  });
+
+</script>

@@ -1,0 +1,37 @@
+<link rel="import" href="../../tangere/tangere.html" />
+<link rel="import" href="cb-event-source.html" />
+
+<dom-module id="cb-container-lv3">
+  <template>
+    <style>
+      :host {
+        display: block;
+        box-sizing: border-box;
+
+        padding: 16px;
+        background-color: var(--lv3-bc);
+
+        --cv-bc: var(--lv4-bc);
+        --vd-bc: var(--lv5-bc);
+      }
+    </style>
+    <cb-event-source items="[[items]]" name="level 3 event source"></cb-event-source>
+  </template>
+</dom-module>
+<script>
+  Polymer({
+    is: "cb-container-lv3",
+    properties: {
+      items: {
+        type: Array,
+        value: function() {
+          return [];
+        }
+      }
+    },
+
+    ready: function () {
+
+    }
+  });
+</script>
