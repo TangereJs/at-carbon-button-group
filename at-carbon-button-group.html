@@ -2,6 +2,7 @@
 <link rel="import" href="../at-core-style-classes/at-core-style-classes.html" />
 <link rel="import" href="../at-carbon-button/at-carbon-button.html" />
 <link rel="import" href="../at-carbon-button-menu/at-carbon-button-menu.html" />
+<link rel="import" href="../at-form-modal/at-form-modal.html">
 
 <dom-module id="at-carbon-button-group">
   <template>
@@ -9,7 +10,7 @@
       :host {
         display: block;
         box-sizing: border-box;
-        @apply(--layout-horizontal);
+        @apply --layout-horizontal;
       }
     </style>
 
@@ -59,10 +60,24 @@
               title: "Value",
               value: ''
             },
-            icon: {
-              type: String,
-              title: "Icon",
-              value: 'now:wrench'
+            settings: {
+              title: "Settings",
+              type: "element",
+              xtype: "at-form-modal",
+              schema: {
+                properties: {
+                  icon: {
+                    type: String,
+                    title: "Icon",
+                    value: 'now:wrench'
+                  },
+                  href: {
+                    type: String,
+                    title: "href",
+                    value: ''
+                  }
+                }
+              }
             }
           }
         }
@@ -99,10 +114,12 @@
       visibleButtons.forEach(function(buttonDef) {
         var carbonButton = document.createElement('at-carbon-button');
         carbonButton.label = buttonDef.title;
-        carbonButton.icon  = buttonDef.icon;
+        carbonButton.icon  = buttonDef.settings.icon;
         carbonButton.raised = true;
         Polymer.dom(carbonButton).setAttribute('value', buttonDef.value);
         Polymer.dom(this.$.buttonContainer).appendChild(carbonButton);
+        // set href after appending because wrapping doesn't work if carbon-button doesn't have parent element
+        carbonButton.href  = buttonDef.settings.href;
       }, this);
 
       if (!menuButtons.length) return;
@@ -121,6 +138,7 @@
       while(curr.nodeName !== "AT-CARBON-BUTTON") {
         curr = curr.parentNode;
       }
+
       var value = curr.getAttribute('value');
       this._fireButtonClickedEvent(value);
     },
