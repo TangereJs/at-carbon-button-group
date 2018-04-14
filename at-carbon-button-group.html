@@ -10,7 +10,7 @@
       :host {
         display: block;
         box-sizing: border-box;
-        @apply --layout-horizontal;
+        @apply(--layout-horizontal);
       }
     </style>
 
@@ -114,12 +114,27 @@
       visibleButtons.forEach(function(buttonDef) {
         var carbonButton = document.createElement('at-carbon-button');
         carbonButton.label = buttonDef.title;
-        carbonButton.icon  = buttonDef.settings.icon;
+
+        carbonButton.icon = "";
+        if (buttonDef.icon) {
+          // depreciated 
+          carbonButton.icon = buttonDef.icon;
+        } else {
+          if (buttonDef.settings && buttonDef.settings.icon) {
+            carbonButton.icon = buttonDef.settings.icon;
+          }
+        }
+
         carbonButton.raised = true;
         Polymer.dom(carbonButton).setAttribute('value', buttonDef.value);
         Polymer.dom(this.$.buttonContainer).appendChild(carbonButton);
+
         // set href after appending because wrapping doesn't work if carbon-button doesn't have parent element
-        carbonButton.href  = buttonDef.settings.href;
+        
+        if (buttonDef.settings && buttonDef.settings.href) {
+          carbonButton.href = buttonDef.settings.href;
+        }
+
       }, this);
 
       if (!menuButtons.length) return;
