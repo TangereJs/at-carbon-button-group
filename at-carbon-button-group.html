@@ -15,7 +15,7 @@
     </style>
 
     <div id="buttonContainer" class="layout-horizontal" on-tap="_handleButtonTapped"></div>
-    <at-carbon-button-menu id="menuButton" icon="[[moreIcon]]" label="[[moreLabel]]" hidden$="[[_computeHidden(buttons, maxButtons)]]" on-clicked="_handleItemClicked"></at-carbon-button-menu>
+    <at-carbon-button-menu id="menuButton" icon="[[moreIcon]]" label="[[moreLabel]]" button-type="[[buttonType]]" hidden$="[[_computeHidden(buttons, maxButtons)]]" on-clicked="_handleItemClicked"></at-carbon-button-menu>
   </template>
 </dom-module>
 <script>
@@ -39,6 +39,18 @@
         type: Number,
         title: "Max Buttons",
         value: 3
+      },
+
+      buttonType: {
+        type: String,
+        value: 'text',
+        xtype: 'enum',
+        observer: '_buttonTypeChanged',
+        required: true,
+        xvaluelist: [
+          { title: "Text", value: "text" },
+          { title: "Contained", value: "contained" }
+        ]
       },
 
       buttons: {
@@ -124,7 +136,8 @@
             carbonButton.icon = buttonDef.settings.icon;
           }
         }
-
+        
+        carbonButton.buttonType = this.buttonType;
         Polymer.dom(carbonButton).setAttribute('value', buttonDef.value);
         Polymer.dom(this.$.buttonContainer).appendChild(carbonButton);
 
@@ -140,6 +153,13 @@
 
       this.$.menuButton.items = [];
       this.$.menuButton.items = menuButtons;
+    },
+
+    _buttonTypeChanged: function(newValue, oldValue) {
+      var existingButtons = Polymer.dom(this.$.buttonContainer).querySelectorAll('at-carbon-button');
+      Array.prototype.forEach.call(existingButtons, function(btn) {
+        btn.buttonType = newValue;
+      });
     },
 
     _computeHidden: function(buttons, maxButtons) {
