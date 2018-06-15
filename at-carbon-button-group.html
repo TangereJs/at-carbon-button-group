@@ -10,7 +10,7 @@
       :host {
         display: block;
         box-sizing: border-box;
-        @apply(--layout-horizontal);
+        @apply --layout-horizontal;
       }
     </style>
 
@@ -94,7 +94,7 @@
       '_initialize(buttons, maxButtons)'
     ],
 
-    ready: function () {
+    ready: function() {
 
     },
 
@@ -106,8 +106,8 @@
         visibleButtons = buttons;
 
       } else {
-        visibleButtons = buttons.slice(0, maxButtons-1);
-        menuButtons = buttons.slice(maxButtons-1);
+        visibleButtons = buttons.slice(0, maxButtons - 1);
+        menuButtons = buttons.slice(maxButtons - 1);
       }
 
       Polymer.dom(this.$.buttonContainer).innerHTML = '';
@@ -124,12 +124,12 @@
             carbonButton.icon = buttonDef.settings.icon;
           }
         }
-        
+
         Polymer.dom(carbonButton).setAttribute('value', buttonDef.value);
         Polymer.dom(this.$.buttonContainer).appendChild(carbonButton);
 
         // set href after appending because wrapping doesn't work if carbon-button doesn't have parent element
-        
+
         if (buttonDef.settings && buttonDef.settings.href) {
           carbonButton.href = buttonDef.settings.href;
         }
@@ -149,7 +149,7 @@
     _handleButtonTapped: function(event) {
       if (event.target.id === "buttonContainer") return;
       var curr = event.target;
-      while(curr.nodeName !== "AT-CARBON-BUTTON") {
+      while (curr.nodeName !== "AT-CARBON-BUTTON") {
         curr = curr.parentNode;
       }
 
